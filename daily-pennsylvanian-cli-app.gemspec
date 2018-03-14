@@ -1,7 +1,7 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "daily/pennsylvanian/cli/app/version"
+require_relative "daily/pennsylvanian/cli/app/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "daily-pennsylvanian-cli-app"
@@ -31,4 +31,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "rake", "~> 10.0"
+  s.add_development_dependency "rspec", ">= 0"
+  s.add_development_dependency "nokogiri", ">= 0"
+  s.add_development_dependency "pry", ">= 0"
 end
