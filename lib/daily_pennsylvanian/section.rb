@@ -1,4 +1,4 @@
 class Section
-  attr_accessor :name, :articles
-  
+  attr_accessor :name, :subsections
+
 end
