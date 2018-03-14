@@ -1,6 +1,5 @@
-class DailyPennsylvanian::Section
-  attr_accessor :name
-  attr_reader :subsections
+class Section
+  attr_accessor :name, :subsections
 
   def initialize
     @subsections = []

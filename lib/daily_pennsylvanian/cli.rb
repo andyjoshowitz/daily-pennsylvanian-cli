@@ -1,4 +1,4 @@
-class DailyPennsylvanian::CLI
+class CLI
   def call
     welcome
     menu
@@ -23,6 +23,6 @@ class DailyPennsylvanian::CLI
   def exit
   end
 
-  def open_section 
+  def open_section
   end
 end

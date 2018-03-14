@@ -1,4 +1,4 @@
-class DailyPennsylvanian::Subsection
+class Subsection
   attr_accessor :name
   attr_reader :articles
 
