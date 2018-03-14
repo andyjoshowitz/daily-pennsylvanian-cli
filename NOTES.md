@@ -19,3 +19,5 @@
 - [ ] Set up config/environment.rb
 - [ ] Update Gemfile (if necessary)
 - [ ] Connect rakefile to config/environment.rb
+- [ ] Set up controller 
+- [ ] Set up scraper  
