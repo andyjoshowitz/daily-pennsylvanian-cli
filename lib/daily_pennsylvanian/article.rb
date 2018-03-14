@@ -1,2 +1,2 @@
-class Section
+class Article
 end
