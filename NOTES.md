@@ -8,3 +8,12 @@
   2) Articles in each section 
       a) Properties to scrape: title, author, date of publish etc.
   3) Content of each article in each section (text)
+
+## Project To Do List
+- [ ] Create Newspaper class
+- [ ] Include properties of Newspaper class (sections)
+- [ ] Create Section class
+- [ ] Include properties of Section (name, url, article etc.)
+- [ ] Create Article class
+- [ ] Include properties of Article (title, author, date etc.)
+- 
