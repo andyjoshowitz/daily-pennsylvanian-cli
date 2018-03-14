@@ -1,4 +1,9 @@
 class Subsection
-  attr_accessor :name, :articles
+  attr_accessor :name
+  attr_reader :articles
+
+  def initialize
+    @articles = []
+  end
 
 end
