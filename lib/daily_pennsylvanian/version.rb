@@ -1,5 +1,5 @@
 module DailyPennsylvanian
-    module Cli
-        VERSION = "0.1.0"
-    end
+  module Cli
+      VERSION = "0.1.0"
+  end
 end
