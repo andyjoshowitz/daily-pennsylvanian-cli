@@ -9,11 +9,13 @@
       a) Properties to scrape: title, author, date of publish etc.
   3) Content of each article in each section (text)
 
-## Project To Do List
+## Project To-Do List
 - [ ] Create Newspaper class
 - [ ] Include properties of Newspaper class (sections)
 - [ ] Create Section class
 - [ ] Include properties of Section (name, url, article etc.)
 - [ ] Create Article class
 - [ ] Include properties of Article (title, author, date etc.)
-- 
+- [ ] Set up config/environment.rb
+- [ ] Update Gemfile (if necessary)
+- [ ] Connect rakefile to config/environment.rb
