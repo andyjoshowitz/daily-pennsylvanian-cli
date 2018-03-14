@@ -16,8 +16,8 @@
 - [ ] Include properties of Section (name, url, article etc.)
 - [ ] Create Article class
 - [ ] Include properties of Article (title, author, date etc.)
-- [ ] Set up config/environment.rb
+- [x] Set up config/environment.rb
 - [ ] Update Gemfile (if necessary)
 - [ ] Connect rakefile to config/environment.rb
-- [ ] Set up controller 
+- [ ] Set up CLI.rb
 - [ ] Set up scraper  
