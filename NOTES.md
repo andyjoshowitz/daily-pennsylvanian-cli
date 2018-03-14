@@ -10,11 +10,11 @@
   3) Content of each article in each section (text)
 
 ## Project To-Do List
-- [ ] Create Newspaper class
-- [ ] Include properties of Newspaper class (sections)
-- [ ] Create Section class
-- [ ] Include properties of Section (name, url, article etc.)
-- [ ] Create Article class
+- [x] Create Subsection class
+- [ ] Include properties of subsection class (name, url, articles)
+- [x] Create Section class
+- [ ] Include properties of Section (name, url, subsection etc.)
+- [x] Create Article class
 - [ ] Include properties of Article (title, author, date etc.)
 - [x] Set up config/environment.rb
 - [ ] Update Gemfile (if necessary)
