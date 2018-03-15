@@ -1,19 +1,18 @@
 class Section
-  attr_accessor :name, :subsections
+  attr_accessor :name, :url, :articles
 
-  def initialize
-    @subsections = []
-    @@all_sections = []
+  def initializes
   end
 
   def self.section_scraper
-    doc = Nokogiri::HTML(open("http://thedp.com"))
+    url = "http://thedp.com"
+    doc = Nokogiri::HTML(open(url))
 
-    doc.search
-    section = self.new
-    section.name = doc.search("a.header-section").text.strip
-
-    @@all_sections
+    sections = doc.search(".section-nav .header-section")
+    sections.collect do |section|
+      s = Section.new
+      s.name = doc.search(".section-nav .header-section").text
+      s.url = doc.search(".section-nav a.href").text.strip
+    end
   end
-
 end
