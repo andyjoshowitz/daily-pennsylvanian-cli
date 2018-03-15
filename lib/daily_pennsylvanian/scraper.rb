@@ -21,7 +21,7 @@ class Scraper
       #puts title.text
     #end
 
-    doc.search('div.row div.col-md-8').collect do |entry|
+    doc.search('div.row div.col-md-8').each do |entry|
       #a = Article.new
       title = entry.search('h3.standard-link a').each do |title|
         puts title.text
@@ -33,10 +33,6 @@ class Scraper
       #@section.add_article(a)
       url = entry.search('h3.standard-link a').each do |link|
         puts link['href']
-      end
-
-      blurb = entry.search('div.col-md-8').each do |body|
-        puts body.text
       end
     end
   end
@@ -51,11 +47,12 @@ class Scraper
     end
   end
 
-  def self.scrape_article_text
+  def self.scrape_article_blurb
     url = "http://thedp.com/section/news"
     doc = Nokogiri::HTML(open(url))
 
-
-
+    blurb = doc.search('div.row div.col-md-8').each do |blurb|
+      puts blurb.text.strip
+    end
   end
 end

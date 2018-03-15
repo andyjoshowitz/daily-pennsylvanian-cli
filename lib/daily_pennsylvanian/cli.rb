@@ -1,7 +1,6 @@
 class CLI
 
   def initialize
-    @s = Scraper.new
 
   end
 
@@ -16,7 +15,7 @@ class CLI
     puts ""
     puts "Which section piques your interest?"
     puts ""
-    @s.get_sections
+    Scraper.get_sections
   end
 
   def menu
@@ -30,15 +29,15 @@ class CLI
     input = ""
     # call methods (list_again, exit, open_section) depending on what the user inputs
     while input != "exit"
-      input = gets.strip
-      case input
-      when "exit"
+      input = gets.strip.downcase
+      if input == "exit"
         exit_program
         break
-      when "list"
+      elsif input == "list"
         list_sections
-      else
-        open_section
+      elsif input.to_i > 0
+        open_section(input.to_i)
+        break
       end
     end
   end
@@ -51,6 +50,7 @@ class CLI
     puts "Thanks for visiting the DP. See you later!"
   end
 
-  def open_section
+  def open_section(input)
+    puts "thanks for choosing #{input}"
   end
 end
