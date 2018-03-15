@@ -1,4 +1,11 @@
 class CLI
+
+  def initialize
+    @s = Scraper.new
+
+  end
+
+
   def call
     welcome
     menu
@@ -8,14 +15,15 @@ class CLI
     puts "Welcome to the Daily Pennsylvanian!"
     puts ""
     puts "Which section piques your interest?"
-    # scrape the website for the website names
+    puts ""
+    @s.get_sections
   end
 
   def menu
     # list menu options: re-list sections, exit, select section
     puts ""
     puts "Menu"
-    puts "1) To select a Section of the newspaper, enter the Section number."
+    puts "1) To select a Section of the newspaper, enter the Section name."
     puts "2) To see a list of the paper's Sections again, enter 'list'."
     puts "3) To exit the program, enter 'exit'."
     # get input
