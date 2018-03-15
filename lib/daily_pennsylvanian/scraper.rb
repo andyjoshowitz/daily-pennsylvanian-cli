@@ -12,7 +12,7 @@ class Scraper
     end
   end
 
-  def self.scrape_article_titles
+  def self.scrape_article_details
     url = "http://thedp.com/section/news"
     doc = Nokogiri::HTML(open(url))
 
@@ -34,6 +34,10 @@ class Scraper
       url = entry.search('h3.standard-link a').each do |link|
         puts link['href']
       end
+
+      blurb = entry.search('div.col-md-8').each do |body|
+        puts body.text
+      end
     end
   end
 
@@ -45,5 +49,13 @@ class Scraper
     timestamp.each do |timestamp|
       puts timestamp.text
     end
+  end
+
+  def self.scrape_article_text
+    url = "http://thedp.com/section/news"
+    doc = Nokogiri::HTML(open(url))
+
+
+
   end
 end
