@@ -1,7 +1,8 @@
 class Section
   attr_accessor :name, :url, :articles
 
-  def initializes
+  def initialize
+    @articles = []
   end
 
   def self.section_scraper
@@ -14,5 +15,10 @@ class Section
       s.name = doc.search(".section-nav .header-section").text
       s.url = doc.search(".section-nav a.href").text.strip
     end
+  end
+
+
+  def add_article(article)
+    @articles << article
   end
 end

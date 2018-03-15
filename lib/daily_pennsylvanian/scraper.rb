@@ -1,4 +1,5 @@
 class Scraper
+  attr_accessor :section
 
   def self.get_sections
     url = "http://thedp.com"
@@ -22,8 +23,10 @@ class Scraper
 
     doc.search('div.col-md-8 h3.standard-link a').collect do |entry|
       a = Article.new
-      a.title = entry.text
-      a.url = entry.attr("href").text
+      a.title = entry.text.strip
+      a.url = entry.attr("href").text.strip
+
+      @section.add_article(a)
     end
   end
 
