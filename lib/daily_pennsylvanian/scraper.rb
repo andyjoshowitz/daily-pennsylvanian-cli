@@ -21,12 +21,16 @@ class Scraper
       #puts title.text
     #end
 
-    doc.search('div.col-md-8 h3.standard-link a').collect do |entry|
-      a = Article.new
-      a.title = entry.text.strip
-      a.url = entry.attr("href").text.strip
-
-      @section.add_article(a)
+    doc.search('div.row div.col-md-8').collect do |entry|
+      #a = Article.new
+      title = entry.search('h3.standard-link a').each do |title|
+        puts title.text
+      end
+      #a.url = entry.attr("href").text.strip
+      timestamp = entry.search('div.timestamp').each do |timestamp|
+        puts timestamp.text
+      end
+      #@section.add_article(a)
     end
   end
 
