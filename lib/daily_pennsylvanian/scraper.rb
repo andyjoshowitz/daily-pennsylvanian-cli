@@ -31,6 +31,9 @@ class Scraper
         puts timestamp.text
       end
       #@section.add_article(a)
+      url = entry.search('h3.standard-link a').each do |link|
+        puts link['href']
+      end
     end
   end
 
