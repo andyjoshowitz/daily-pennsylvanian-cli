@@ -1,56 +1,69 @@
-class CLI
+class Scraper
+  attr_accessor :section
 
-  def initialize
+  def self.get_sections
+    url = "http://thedp.com"
+    doc = Nokogiri::HTML(open(url))
 
-  end
-
-
-  def call
-    welcome
-    menu
-  end
-
-  def welcome
-    puts "Welcome to the Daily Pennsylvanian!"
-    puts ""
-    puts "Which section piques your interest?"
-    puts ""
-    Scraper.get_sections
-  end
-
-  def menu
-    # list menu options: re-list sections, exit, select section
-    puts ""
-    puts "Menu"
-    puts "1) To select a Section of the newspaper, enter the Section name."
-    puts "2) To see a list of the paper's Sections again, enter 'list'."
-    puts "3) To exit the program, enter 'exit'."
-    # get input
-    input = ""
-    # call methods (list_again, exit, open_section) depending on what the user inputs
-    while input != "exit"
-      input = gets.strip.downcase
-      if input == "exit"
-        exit_program
-        break
-      elsif input == "list"
-        list_sections
-      elsif input.to_i > 0
-        open_section(input.to_i)
-        break
-      end
+    sections = doc.search(".section-nav .header-section")
+    sections.each_with_index do |section, index|
+      indexplusone = index + 1
+      puts "#{indexplusone}) #{section.text.gsub(/\"/, "")}"
     end
   end
 
-  def list_sections
+  def self.scrape_article_details
+    url = "http://thedp.com/section/news"
+    doc = Nokogiri::HTML(open(url))
+
+    #title = doc.search('div.col-md-8 h3.standard-link a')
+    #title.each do |title|
+      #puts title.text
+    #end
+
+    doc.search('div.row div.col-md-8').each do |entry|
+      a = Article.new
+      a.title = entry.search('h3.standard-link a').text
+      #a.url = entry.attr("href").text.strip
+      a.timestamp = entry.search('div.timestamp').each do |timestamp|
+        puts timestamp.text
+      end
+      #@section.add_article(a)
+      a.url = entry.search('h3.standard-link a').each do |link|
+        puts link['href']
+      end
+      Section.add_article(a)
+    end
 
   end
 
-  def exit_program
-    puts "Thanks for visiting the DP. See you later!"
+  def self.scrape_article_timestamps
+    url = "http://thedp.com/section/news"
+    doc = Nokogiri::HTML(open(url))
+
+    timestamp = doc.search('div.col-md-8 div.timestamp')
+    timestamp.each do |timestamp|
+      puts timestamp.text
+    end
   end
 
-  def open_section(input)
-    puts "thanks for choosing #{input}"
+  def self.list_articles
+    url = "http://thedp.com/section/news"
+    doc = Nokogiri::HTML(open(url))
+
+    title = doc.search('div.col-md-8 h3.standard-link a')
+    title.each_with_index do |title, index|
+      indexplusone = index + 1
+      puts "#{indexplusone}) #{title.text}"
+    end
+  end
+
+  def self.scrape_article_blurb
+    url = "http://thedp.com/section/news"
+    doc = Nokogiri::HTML(open(url))
+
+    blurb = doc.search('div.row div.col-md-8').each do |blurb|
+      puts blurb.text.strip
+    end
   end
 end
