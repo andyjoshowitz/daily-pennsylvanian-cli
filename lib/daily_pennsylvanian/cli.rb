@@ -61,7 +61,6 @@ class CLI
       if user_input == "exit"
         exit_program
         break
-        puts "Enter 'exit' one more time:"
       elsif user_input.to_i == 1
         list_articles 
       elsif user_input.to_i == 2

@@ -29,7 +29,13 @@ class Section
 
   def self.access_url(input)
     index = input - 1
-    puts @@sections[index].url
+    if -1 < index && index < 4 
+      puts "Click the url:"
+      puts "http://thedp.com#{@@sections[index].url}"
+    else 
+      puts "Click the url:"
+      puts @@sections[index].url
+    end
   end
 end
 end
