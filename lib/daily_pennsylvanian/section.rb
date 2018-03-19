@@ -1,24 +1,22 @@
+
 class Section
   attr_accessor :name, :url, :articles
 
   def initialize
-    @articles = []
+    @@sections = []
   end
 
-  def self.section_scraper
-    url = "http://thedp.com"
-    doc = Nokogiri::HTML(open(url))
+  def self.scrape_section_details
+    link = "http://thedp.com"
+    doc = Nokogiri::HTML(open(link))
 
-    sections = doc.search(".section-nav .header-section")
-    sections.collect do |section|
+    doc.search("div.homepage-header h4.section-nav").each do |entry|
       s = Section.new
-      s.name = doc.search(".section-nav .header-section").text
-      s.url = doc.search(".section-nav a.href").text.strip
+      s.name = entry.search("a").text.each {|name| name.gsub!(/$/, ', ')}
+      s.url = entry.search("a[href]").map{|element| element["href"]}
+      @@sections << s
     end
+    @@sections
   end
 
-
-  def add_article(article)
-    @articles << article
-  end
 end
