@@ -62,12 +62,12 @@ class CLI
         exit_program
         break
       elsif user_input.to_i == 1
-        list_articles 
+        list_articles(input)
       elsif user_input.to_i == 2
         Section.access_url(input)
       elsif user_input.to_i == 3
         main_menu
-      else 
+      else
         puts "invalid entry, please try again:"
         Section.open_section(input)
       end
@@ -81,8 +81,9 @@ class CLI
     puts "4) To exit the program, enter 'exit'."
   end
 
-  def list_articles
-    scrape_articles 
-    puts "articles"
+  def list_articles(input)
+    puts "Articles:"
+    Section.scrape_article_details(input)
+    #Section.print_articles
   end
 end
