@@ -6,17 +6,21 @@ class Section
     @@sections = []
   end
 
-  def self.scrape_section_details
+
+  def self.section_names
+    self.scrape
+    @@sections.each {|section| puts section.name}
+  end
+
+  def self.scrape
     link = "http://thedp.com"
     doc = Nokogiri::HTML(open(link))
 
-    doc.search("div.homepage-header h4.section-nav").each do |entry|
+    doc.search("div.homepage-header h4.section-nav a").collect do |entry|
       s = Section.new
-      s.name = entry.search("a").text.each {|name| name.gsub!(/$/, ', ')}
-      s.url = entry.search("a[href]").map{|element| element["href"]}
+      s.name = entry.text
+      s.url = entry['href']
       @@sections << s
-    end
-    @@sections
   end
-
+end
 end
