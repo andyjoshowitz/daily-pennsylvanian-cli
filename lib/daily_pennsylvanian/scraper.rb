@@ -7,32 +7,25 @@ class Scraper
   end
   @@articles = []
 
-  def self.get_sections
-    url = "http://thedp.com"
-    doc = Nokogiri::HTML(open(url))
+  # def self.get_sections
+    # url = "http://thedp.com"
+    # doc = Nokogiri::HTML(open(url))
 
-    sections = doc.search(".section-nav .header-section")
-    sections.each_with_index do |section, index|
-      indexplusone = index + 1
-      puts "#{indexplusone}) #{section.text.gsub(/\"/, "")}"
-    end
-  end
+    # sections = doc.search(".section-nav .header-section")
+    # sections.each_with_index do |section, index|
+      # indexplusone = index + 1
+      # puts "#{indexplusone}) #{section.text.gsub(/\"/, "")}"
+    # end
+  # end
 
   def self.scrape_article_details
     url = "http://thedp.com/section/news"
     doc = Nokogiri::HTML(open(url))
 
-    #title = doc.search('div.col-md-8 h3.standard-link a')
-    #title.each do |title|
-      #puts title.text
-    #end
-
     doc.search('div.row div.col-md-8').each do |entry|
       a = Article.new
       a.title = entry.search('h3.standard-link a').text
-      #a.url = entry.attr("href").text.strip
       a.timestamp = entry.search('div.timestamp').text
-      #@section.add_article(a)
       a.url = entry.search('h3.standard-link a[href]').map {|element| element["href"]}
       puts a.title
       @@articles << a

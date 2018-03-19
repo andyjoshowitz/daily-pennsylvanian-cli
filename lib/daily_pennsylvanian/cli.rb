@@ -15,7 +15,9 @@ class CLI
     puts ""
     puts "Which section piques your interest?"
     puts ""
-    Scraper.get_sections
+    Section.scrape
+    Section.section_names
+    #Scraper.get_sections
   end
 
   def menu
@@ -43,7 +45,7 @@ class CLI
   end
 
   def list_sections
-
+    Section.section_names
   end
 
   def exit_program
@@ -51,6 +53,6 @@ class CLI
   end
 
   def open_section(input)
-    puts "thanks for choosing #{input}"
+    Section.open_section(input)
   end
 end
