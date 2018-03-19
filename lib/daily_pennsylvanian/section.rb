@@ -62,7 +62,9 @@ class Section
     end
     @@articles[1..-1].each_with_index do |article, index|
       indexplusone = index + 1
-      puts "#{indexplusone}) #{article.title}"
+      puts "#{indexplusone}) #{article.title}
+      #{article.timestamp}
+      #{article.url}"
     end
   end
 
