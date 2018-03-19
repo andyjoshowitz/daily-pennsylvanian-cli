@@ -7,7 +7,7 @@ class CLI
 
   def call
     welcome
-    menu
+    main_menu
   end
 
   def welcome
@@ -20,7 +20,7 @@ class CLI
     #Scraper.get_sections
   end
 
-  def menu
+  def main_menu
     # list menu options: re-list sections, exit, select section
     puts ""
     puts "Menu"
@@ -54,5 +54,33 @@ class CLI
 
   def open_section(input)
     Section.open_section(input)
+    section_menu
+    user_input = ""
+    while user_input != "exit"
+      user_input = gets.strip.downcase
+      if user_input == "exit"
+        exit_program
+        break
+        puts "Enter 'exit' one more time:"
+      elsif user_input.to_i == 1
+        list_articles 
+      elsif user_input.to_i == 2
+        main_menu
+      else 
+        puts "invalid entry, please try again:"
+        Section.open_section(input)
+      end
+    end
+  end
+
+  def section_menu
+    puts "1) To see a list of articles, enter 1."
+    puts "2) To return to the main menu, enter 2."
+    puts "3) To exit the program, enter 'exit'."
+  end
+
+  def list_articles
+    scrape_articles 
+    puts "articles"
   end
 end

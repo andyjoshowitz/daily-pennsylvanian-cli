@@ -25,13 +25,7 @@ class Section
   def self.open_section(input)
     index = input - 1
     puts "Welcome to #{@@sections[index].name}"
-    #open_menu
-
-  end
-
-  def open_menu
-    puts "1) To see a list of articles, enter 1."
-    puts "2) To return to the main menu, enter 2."
+    
   end
 end
 end
