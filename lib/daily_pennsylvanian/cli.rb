@@ -65,6 +65,8 @@ class CLI
       elsif user_input.to_i == 1
         list_articles 
       elsif user_input.to_i == 2
+        Section.access_url(input)
+      elsif user_input.to_i == 3
         main_menu
       else 
         puts "invalid entry, please try again:"
@@ -75,8 +77,9 @@ class CLI
 
   def section_menu
     puts "1) To see a list of articles, enter 1."
-    puts "2) To return to the main menu, enter 2."
-    puts "3) To exit the program, enter 'exit'."
+    puts "2) To access the sections website, enter 2."
+    puts "3) To return to the main menu, enter 3."
+    puts "4) To exit the program, enter 'exit'."
   end
 
   def list_articles

@@ -25,7 +25,11 @@ class Section
   def self.open_section(input)
     index = input - 1
     puts "Welcome to #{@@sections[index].name}"
-    
+  end
+
+  def self.access_url(input)
+    index = input - 1
+    puts @@sections[index].url
   end
 end
 end
