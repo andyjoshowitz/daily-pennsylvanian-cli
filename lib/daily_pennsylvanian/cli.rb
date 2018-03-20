@@ -86,16 +86,6 @@ class CLI
     puts "Articles:"
     Section.scrape_article_details(input)
     articles_menu
-  end
-
-  def articles_menu
-    puts "Menu:"
-    puts "1) To read an article, enter its number."
-    puts "2) To exit the program, enter 'exit'."
-    article_content
-  end
-
-  def article_content
     number = ""
     while number != "exit"
       number = gets.strip.downcase
@@ -111,5 +101,16 @@ class CLI
         articles_menu
       end
     end
+  end
+
+  def articles_menu
+    puts "Menu:"
+    puts "1) To read an article, enter its number."
+    puts "2) To exit the program, enter 'exit'."
+    #article_content
+  end
+
+  def article_content
+
   end
 end

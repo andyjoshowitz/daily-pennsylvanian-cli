@@ -70,7 +70,7 @@ class Section
       link = article.url.join
       doc = Nokogiri::HTML(open(link))
       article.author = doc.search('div.article-metadata span.byline a').text
-      article.content = doc.search('div.col-sm-12 p').collect do |pgh|
+      article.content = doc.search('div.col-sm-12.col-md-8.article-container p').collect do |pgh|
         pgh.text.strip
       end
     end
@@ -87,7 +87,7 @@ class Section
   end
 
   def self.print_article_content(input)
-    index = input - 1
-    puts @@articles[index].content.join
+    index = input
+    puts @@articles[index].content.join.strip
   end
 end
