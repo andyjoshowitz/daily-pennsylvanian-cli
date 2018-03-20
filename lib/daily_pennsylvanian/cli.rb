@@ -67,8 +67,12 @@ class CLI
         exit_program
         break
       elsif user_input.to_i == 1
-        list_articles(input)
-        article_content
+        if input = 4
+          list_subsections
+        else
+          list_articles(input)
+          article_content
+        end
         break
       elsif user_input.to_i == 2
         puts ""
@@ -140,5 +144,21 @@ class CLI
         articles_menu
       end
     end
+  end
+
+  def list_subsections
+    puts ""
+    puts "..."
+    puts "Subsections:"
+    Section.print_subsections
+    subsection_menu
+  end
+
+  def subsection_menu
+    puts ""
+    puts "Subsection Menu:"
+    puts "To access a subsection's url, enter its number."
+    puts "To return to the Main Menu, enter 'menu'."
+    puts "To exit the program, enter 'exit'."
   end
 end

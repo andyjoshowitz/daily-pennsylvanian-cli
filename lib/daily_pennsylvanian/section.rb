@@ -1,8 +1,9 @@
 
 class Section
-  attr_accessor :name, :url, :articles
+  attr_accessor :name, :url, :articles, :subsections
   @@sections = []
   @@articles = []
+  @@subsections = []
 
   def self.section_names
     @@sections[0..4].each_with_index do |section, index|
@@ -35,7 +36,7 @@ class Section
 
   def self.access_url(input)
     index = input - 1
-    if -1 < index && index < 4
+    if -1 < index && index < 3
       puts "Click the url:"
       puts "http://thedp.com#{@@sections[index].url}"
     else
@@ -56,13 +57,21 @@ class Section
   def self.scrape_article_details(input)
     Section.link(input)
     doc = Nokogiri::HTML(open(Section.link(input)))
-
-    doc.search('div.row div.col-md-8').each do |entry|
-      a = Article.new
-      a.title = entry.search('h3.standard-link a').text
-      a.timestamp = entry.search('div.timestamp').text
-      a.url = entry.search('h3.standard-link a[href]').map {|element| element["href"]}
-      @@articles << a
+    if Section.link(input) == "http://www.34st.com/"
+      doc.search('nav.col-xs-10').each do |entry|
+        ss = Subsection.new
+        ss.name = entry.search('a').text
+        ss.url = entry.search('a[href]').map {|element| element["href"]}
+        @@subsections << ss
+      end
+    else
+      doc.search('div.row div.col-md-8').each do |entry|
+        a = Article.new
+        a.title = entry.search('h3.standard-link a').text
+        a.timestamp = entry.search('div.timestamp').text
+        a.url = entry.search('h3.standard-link a[href]').map {|element| element["href"]}
+        @@articles << a
+      end
     end
     Section.scrape_article_details_2
     Section.print_articles
@@ -99,6 +108,12 @@ class Section
     puts @@articles[index].timestamp
     puts ""
     puts @@articles[index].content.join
+  end
 
+  def self.print_subsections
+    @@subsections.each_with_index do |subsection, index|
+      indexplusone = index + 1
+      puts "#{indexplusone}) #{subsection.name}"
+    end
   end
 end
