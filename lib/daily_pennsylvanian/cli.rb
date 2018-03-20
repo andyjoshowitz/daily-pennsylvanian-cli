@@ -84,6 +84,8 @@ class CLI
   def list_articles(input)
     puts "Articles:"
     Section.scrape_article_details(input)
+    #Section.scrape_article_details_2
+    #Section.print_articles
     #Section.print_articles
   end
 end

@@ -60,18 +60,26 @@ class Section
       a.url = entry.search('h3.standard-link a[href]').map {|element| element["href"]}
       @@articles << a
     end
-    @@articles[1..-1].each_with_index do |article, index|
-      indexplusone = index + 1
-      puts "#{indexplusone}) #{article.title}
-      Posted: #{article.timestamp}
-      Link: #{article.url.join}"
+    Section.scrape_article_details_2
+    Section.print_articles
+  end
+
+  #need to figure out how to scrape each article's author and content (body text)
+  def self.scrape_article_details_2
+    @@articles.each do |article|
+      link = article.url.join
+      doc = Nokogiri::HTML(open(link))
+      article.author = doc.search('div.article-metadata span.byline a').text
     end
   end
 
   def self.print_articles
-    @articles.each_with_index do |article, index|
+    @@articles[1..-1].each_with_index do |article, index|
       indexplusone = index + 1
-      puts "#{indexplusone}) #{article.title}"
+      puts "#{indexplusone}) #{article.title}
+      By: #{article.author}
+      Posted: #{article.timestamp}
+      Link: #{article.url.join}"
     end
   end
 end
