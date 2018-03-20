@@ -64,6 +64,16 @@ class Section
         ss.url = entry['href']
         @@subsections << ss
       end
+    elsif Section.link(input) == "http://www.underthebutton.com/"
+      doc.search('div.col-md-6.main article').each do |entry|
+        a = Article.new
+        a.title = entry.search('h2 a').text.strip
+        a.timestamp = entry.search('span.publish').text.strip
+        a.url = entry.search('h2 a[href]').map {|element| element["href"]}
+        a.author = entry.search('span.author a').text.strip
+        @@articles << a
+      end
+      Section.print_articles
     else
       doc.search('div.row div.col-md-8').each do |entry|
         a = Article.new
@@ -107,7 +117,11 @@ class Section
     puts @@articles[index].author
     puts @@articles[index].timestamp
     puts ""
-    puts @@articles[index].content.join
+    if @@articles[index].content == true
+      puts @@articles[index].content.join
+    else
+      puts @@articles[index].url
+    end
   end
 
   def self.print_subsections
