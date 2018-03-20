@@ -150,6 +150,7 @@ class CLI
     puts ""
     puts "..."
     puts "Subsections:"
+    Section.scrape_article_details(4)
     Section.print_subsections
     subsection_menu
   end

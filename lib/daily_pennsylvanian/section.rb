@@ -58,10 +58,10 @@ class Section
     Section.link(input)
     doc = Nokogiri::HTML(open(Section.link(input)))
     if Section.link(input) == "http://www.34st.com/"
-      doc.search('nav.col-xs-10').each do |entry|
+      doc.search('nav.col-xs-10 a').each do |entry|
         ss = Subsection.new
-        ss.name = entry.search('a').text
-        ss.url = entry.search('a[href]').map {|element| element["href"]}
+        ss.name = entry.text
+        ss.url = entry['href']
         @@subsections << ss
       end
     else
@@ -72,9 +72,9 @@ class Section
         a.url = entry.search('h3.standard-link a[href]').map {|element| element["href"]}
         @@articles << a
       end
+      Section.scrape_article_details_2
+      Section.print_articles
     end
-    Section.scrape_article_details_2
-    Section.print_articles
   end
 
   #need to figure out how to scrape each article's author and content (body text)
@@ -111,7 +111,7 @@ class Section
   end
 
   def self.print_subsections
-    @@subsections.each_with_index do |subsection, index|
+    @@subsections[0..5].each_with_index do |subsection, index|
       indexplusone = index + 1
       puts "#{indexplusone}) #{subsection.name}"
     end
