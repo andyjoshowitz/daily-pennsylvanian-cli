@@ -70,6 +70,9 @@ class Section
       link = article.url.join
       doc = Nokogiri::HTML(open(link))
       article.author = doc.search('div.article-metadata span.byline a').text
+      article.content = doc.search('div.col-sm-12 p').each do |pgh|
+        pgh.text.strip
+      end
     end
   end
 
@@ -81,5 +84,10 @@ class Section
       Posted: #{article.timestamp}
       Link: #{article.url.join}"
     end
+  end
+
+  def self.print_article_content(input)
+    index = input - 1
+    @@articles[index].content
   end
 end

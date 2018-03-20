@@ -24,7 +24,7 @@ class CLI
     # list menu options: re-list sections, exit, select section
     puts ""
     puts "Menu"
-    puts "1) To select a Section of the newspaper, enter the Section name."
+    puts "1) To select a Section of the newspaper, enter the Section number."
     puts "2) To see a list of the paper's Sections again, enter 'list'."
     puts "3) To exit the program, enter 'exit'."
     # get input
@@ -84,8 +84,32 @@ class CLI
   def list_articles(input)
     puts "Articles:"
     Section.scrape_article_details(input)
-    #Section.scrape_article_details_2
-    #Section.print_articles
-    #Section.print_articles
+    articles_menu
+    number = ""
+    while number != "exit"
+      number = gets.strip.downcase
+      if number == "exit"
+        exit_program
+        puts "Enter 'exit' one more time..."
+        break
+        
+      elsif number.to_i > 0
+        input = number.to_i
+        Section.print_article_content(input)
+      else
+        puts "invalid entry, please try again:"
+        articles_menu
+      end
+    end
+  end
+
+  def articles_menu
+    puts "Menu:
+    1) To read an article, enter its number.
+    2) To exit the program, enter 'exit'."
+  end
+
+  def article_content(number)
+
   end
 end
