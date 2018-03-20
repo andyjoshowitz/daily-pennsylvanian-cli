@@ -63,6 +63,7 @@ class CLI
         break
       elsif user_input.to_i == 1
         list_articles(input)
+        articles_menu
       elsif user_input.to_i == 2
         Section.access_url(input)
       elsif user_input.to_i == 3
@@ -85,6 +86,16 @@ class CLI
     puts "Articles:"
     Section.scrape_article_details(input)
     articles_menu
+  end
+
+  def articles_menu
+    puts "Menu:"
+    puts "1) To read an article, enter its number."
+    puts "2) To exit the program, enter 'exit'."
+    article_content
+  end
+
+  def article_content
     number = ""
     while number != "exit"
       number = gets.strip.downcase
@@ -92,7 +103,6 @@ class CLI
         exit_program
         puts "Enter 'exit' one more time..."
         break
-        
       elsif number.to_i > 0
         input = number.to_i
         Section.print_article_content(input)
@@ -101,15 +111,5 @@ class CLI
         articles_menu
       end
     end
-  end
-
-  def articles_menu
-    puts "Menu:
-    1) To read an article, enter its number.
-    2) To exit the program, enter 'exit'."
-  end
-
-  def article_content(number)
-
   end
 end
