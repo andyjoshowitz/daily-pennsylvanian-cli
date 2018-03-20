@@ -117,7 +117,7 @@ class Section
     puts @@articles[index].author
     puts @@articles[index].timestamp
     puts ""
-    if @@articles[index].content == true
+    if @@articles[index].content != ""
       puts @@articles[index].content.join
     else
       puts @@articles[index].url
