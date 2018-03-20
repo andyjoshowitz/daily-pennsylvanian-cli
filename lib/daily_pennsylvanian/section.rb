@@ -47,7 +47,7 @@ class Section
 
   def self.link(input)
     index = input - 1
-    if -1 < index && index < 4
+    if -1 < index && index < 3
       "http://thedp.com#{@@sections[index].url}"
     else
       @@sections[index].url

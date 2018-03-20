@@ -67,7 +67,7 @@ class CLI
         exit_program
         break
       elsif user_input.to_i == 1
-        if input = 4
+        if input == 4
           list_subsections
         else
           list_articles(input)
