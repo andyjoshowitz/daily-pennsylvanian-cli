@@ -59,7 +59,7 @@ class CLI
 
   def open_section(input)
     Section.open_section(input)
-    section_menu
+    section_menu(input)
     user_input = ""
     while user_input != "exit"
       user_input = gets.strip.downcase
@@ -82,15 +82,23 @@ class CLI
       else
         puts "invalid entry, please try again:"
         Section.open_section(input)
+        section_menu(input)
       end
     end
   end
 
-  def section_menu
-    puts "1) To see a list of articles, enter 1."
-    puts "2) To access the sections website, enter 2."
-    puts "3) To return to the main menu, enter 3."
-    puts "4) To exit the program, enter 'exit'."
+  def section_menu (input)
+    if input == 4
+      puts "1) To see a list of subsections, enter 1."
+      puts "2) To access the sections website, enter 2."
+      puts "3) To return to the main menu, enter 3."
+      puts "4) To exit the program, enter 'exit'."
+    else
+      puts "1) To see a list of articles, enter 1."
+      puts "2) To access the sections website, enter 2."
+      puts "3) To return to the main menu, enter 3."
+      puts "4) To exit the program, enter 'exit'."
+    end
   end
 
   def list_articles(input)
