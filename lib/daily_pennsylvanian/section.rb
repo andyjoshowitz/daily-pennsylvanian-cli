@@ -20,8 +20,8 @@ class Section
       s.name = entry.text
       s.url = entry['href']
       s.articles = []
-      unless s.name == "Multimedia" || s.name == "Projects" 
-        @@sections << s 
+      unless s.name == "Multimedia" || s.name == "Projects"
+        @@sections << s
       end
     end
   end
@@ -94,11 +94,11 @@ class Section
     index = input
     puts ""
     puts "..."
+    puts @@articles[index].title
     puts @@articles[index].author
     puts @@articles[index].timestamp
     puts ""
     puts @@articles[index].content.join
-    puts ""
-    puts "To return to the articles menu, enter 'exit'."
+
   end
 end

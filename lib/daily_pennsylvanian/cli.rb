@@ -25,9 +25,9 @@ class CLI
     puts "1) To select a Section of the newspaper, enter the Section number."
     puts "2) To see a list of the paper's Sections again, enter 'list'."
     puts "3) To exit the program, enter 'exit'."
-    # get input
+
     input = ""
-    # call methods (list_again, exit, open_section) depending on what the user inputs
+
     while input != "exit"
       input = gets.strip.downcase
       if input == "exit"
@@ -68,11 +68,17 @@ class CLI
         break
       elsif user_input.to_i == 1
         list_articles(input)
-        articles_menu
+        article_content
+        break
       elsif user_input.to_i == 2
+        puts ""
+        puts "..."
         Section.access_url(input)
+        puts ""
+        puts "To exit the program, enter 'exit'."
       elsif user_input.to_i == 3
         main_menu
+        break
       else
         puts "invalid entry, please try again:"
         Section.open_section(input)
@@ -93,8 +99,6 @@ class CLI
     puts ""
     puts "Articles:"
     Section.scrape_article_details(input)
-    articles_menu
-    article_content
   end
 
   def articles_menu
@@ -105,18 +109,24 @@ class CLI
   end
 
   def article_content
+    articles_menu
     number = ""
     while number != "exit"
       number = gets.strip.downcase
       if number == "exit"
         exit_program
-        puts "Enter 'exit' one more time..."
         break
       elsif number.to_i > 0
         input = number.to_i
         Section.print_article_content(input)
+        puts ""
+        puts "To return to the articles menu, enter 'back'."
+      elsif number == "back"
+        article_content
+        break
       elsif number == "menu"
         main_menu
+        break
       else
         puts "invalid entry, please try again:"
         articles_menu
