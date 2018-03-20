@@ -13,17 +13,15 @@ class CLI
   def welcome
     puts "Welcome to the Daily Pennsylvanian!"
     puts ""
-    puts "Which section piques your interest?"
-    puts ""
     Section.scrape
-    Section.section_names
-    #Scraper.get_sections
   end
 
   def main_menu
     # list menu options: re-list sections, exit, select section
+    puts "Which section piques your interest?"
+    Section.section_names
     puts ""
-    puts "Menu"
+    puts "Main Menu"
     puts "1) To select a Section of the newspaper, enter the Section number."
     puts "2) To see a list of the paper's Sections again, enter 'list'."
     puts "3) To exit the program, enter 'exit'."
@@ -45,11 +43,18 @@ class CLI
   end
 
   def list_sections
+    puts ""
+    puts "..."
+    puts "Sections"
     Section.section_names
+    puts ""
+    puts "To select a section, enter its number:"
   end
 
   def exit_program
+    puts ""
     puts "Thanks for visiting the DP. See you later!"
+    puts ""
   end
 
   def open_section(input)
@@ -83,6 +88,9 @@ class CLI
   end
 
   def list_articles(input)
+    puts ""
+    puts "Loading articles..."
+    puts ""
     puts "Articles:"
     Section.scrape_article_details(input)
     articles_menu
@@ -93,6 +101,7 @@ class CLI
     puts "Menu:"
     puts "1) To read an article, enter its number."
     puts "2) To exit the program, enter 'exit'."
+    puts "3) To return to the Main Menu, enter 'menu'."
   end
 
   def article_content
@@ -106,6 +115,8 @@ class CLI
       elsif number.to_i > 0
         input = number.to_i
         Section.print_article_content(input)
+      elsif number == "menu"
+        main_menu
       else
         puts "invalid entry, please try again:"
         articles_menu

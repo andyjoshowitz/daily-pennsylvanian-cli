@@ -5,7 +5,7 @@ class Section
   @@articles = []
 
   def self.section_names
-    @@sections[0..6].each_with_index do |section, index|
+    @@sections[0..4].each_with_index do |section, index|
       indexplusone = index + 1
       puts "#{indexplusone}) #{section.name}"
     end
@@ -20,12 +20,16 @@ class Section
       s.name = entry.text
       s.url = entry['href']
       s.articles = []
-      @@sections << s
+      unless s.name == "Multimedia" || s.name == "Projects" 
+        @@sections << s 
+      end
     end
   end
 
   def self.open_section(input)
     index = input - 1
+    puts ""
+    puts "..."
     puts "Welcome to #{@@sections[index].name}"
   end
 
@@ -88,6 +92,13 @@ class Section
 
   def self.print_article_content(input)
     index = input
-    puts @@articles[index].content.join.strip
+    puts ""
+    puts "..."
+    puts @@articles[index].author
+    puts @@articles[index].timestamp
+    puts ""
+    puts @@articles[index].content.join
+    puts ""
+    puts "To return to the articles menu, enter 'exit'."
   end
 end
