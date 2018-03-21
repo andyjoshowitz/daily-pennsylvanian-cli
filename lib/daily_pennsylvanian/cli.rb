@@ -17,17 +17,9 @@ class CLI
   end
 
   def main_menu
-    # list menu options: re-list sections, exit, select section
-    puts "Which section piques your interest?"
-    Section.section_names
-    puts ""
-    puts "Main Menu"
-    puts "1) To select a Section of the newspaper, enter the Section number."
-    puts "2) To see a list of the paper's Sections again, enter 'list'."
-    puts "3) To exit the program, enter 'exit'."
+    main_menu_options
 
     input = ""
-
     while input != "exit"
       input = gets.strip.downcase
       if input == "exit"
@@ -40,6 +32,16 @@ class CLI
         break
       end
     end
+  end
+
+  def main_menu_options
+    puts "Which section piques your interest?"
+    Section.section_names
+    puts ""
+    puts "Main Menu"
+    puts "1) To select a Section of the newspaper, enter the Section number."
+    puts "2) To see a list of the paper's Sections again, enter 'list'."
+    puts "3) To exit the program, enter 'exit'."
   end
 
   def list_sections
@@ -68,23 +70,19 @@ class CLI
         break
       elsif user_input.to_i == 1
         if input == 4
-          list_subsections
+          open_subsections
         else
           list_articles(input)
           article_content
         end
         break
       elsif user_input.to_i == 2
-        puts ""
-        puts "..."
-        Section.access_url(input)
-        puts ""
-        puts "To exit the program, enter 'exit'."
-      elsif user_input.to_i == 3
+        get_url(input)
+      elsif user_input.to_i == 3 ||user_input == "menu"
         main_menu
         break
       else
-        puts "invalid entry, please try again:"
+        invalid_entry
         Section.open_section(input)
         section_menu(input)
       end
@@ -92,6 +90,8 @@ class CLI
   end
 
   def section_menu (input)
+    puts ""
+    puts "Section Menu"
     if input == 4
       puts "1) To see a list of subsections, enter 1."
       puts "2) To access the sections website, enter 2."
@@ -105,6 +105,15 @@ class CLI
     end
   end
 
+  def get_url(input)
+    puts ""
+    puts "..."
+    Section.access_url(input)
+    puts ""
+    puts "To exit the program, enter 'exit'."
+    puts "To return to the menu, enter 'menu'."
+  end
+
   def list_articles(input)
     puts ""
     puts "Loading articles..."
@@ -114,10 +123,15 @@ class CLI
   end
 
   def articles_menu
-    puts "Menu:"
+    puts ""
+    puts "Articles Menu:"
     puts "1) To read an article, enter its number."
     puts "2) To exit the program, enter 'exit'."
     puts "3) To return to the Main Menu, enter 'menu'."
+  end
+
+  def invalid_entry
+    puts "invalid entry, please try again:"
   end
 
   def article_content
@@ -133,6 +147,7 @@ class CLI
         Section.print_article_content(input)
         puts ""
         puts "To return to the articles menu, enter 'back'."
+        puts "To exit the program, enter 'exit'."
       elsif number == "back"
         article_content
         break
@@ -140,18 +155,14 @@ class CLI
         main_menu
         break
       else
-        puts "invalid entry, please try again:"
+        invalid_entry
         articles_menu
       end
     end
   end
 
-  def list_subsections
-    puts ""
-    puts "..."
-    puts "Subsections:"
-    Section.scrape_article_details(4)
-    Section.print_subsections
+  def open_subsections
+    list_subsections
     subsection_menu
     ss_input = ""
     while ss_input != "exit"
@@ -164,11 +175,15 @@ class CLI
         Section.access_ss_url(input)
         puts ""
         puts "To exit the program, enter 'exit'."
-      elsif number == "menu"
+        puts "To return to the subsection menu, enter 'back'."
+      elsif ss_input == 'back'
+        open_subsections
+        break
+      elsif ss_input == "menu"
         main_menu
         break
       else
-        puts "invalid entry, please try again:"
+        invalid_entry
         subsection_menu
       end
     end
@@ -180,5 +195,13 @@ class CLI
     puts "1) To access a subsection's url, enter its number."
     puts "2) To return to the Main Menu, enter 'menu'."
     puts "3) To exit the program, enter 'exit'."
+  end
+
+  def list_subsections
+    puts ""
+    puts "..."
+    puts "Subsections:"
+    Section.scrape_article_details(4)
+    Section.print_subsections
   end
 end
