@@ -1,12 +1,21 @@
 
 class Section
   attr_accessor :name, :url, :articles, :subsections
+
   @@sections = []
-  @@articles = []
-  @@subsections = []
+  @subsections = []
+  @articles = []
+
+  def self.add_section(s)
+    @@sections << s
+  end
+
+  def self.sections
+    @@sections
+  end
 
   def self.section_names
-    @@sections[0..4].each_with_index do |section, index|
+    self.sections[0..4].each_with_index do |section, index|
       indexplusone = index + 1
       puts "#{indexplusone}) #{section.name}"
     end
@@ -22,7 +31,7 @@ class Section
       s.url = entry['href']
       s.articles = []
       unless s.name == "Multimedia" || s.name == "Projects"
-        @@sections << s
+        self.add_section(s)
       end
     end
   end
@@ -31,65 +40,65 @@ class Section
     index = input - 1
     puts ""
     puts "..."
-    puts "Welcome to #{@@sections[index].name}"
+    puts "Welcome to #{self.sections[index].name}"
   end
 
   def self.access_url(input)
     index = input - 1
     if -1 < index && index < 3
       puts "Click the url:"
-      puts "http://thedp.com#{@@sections[index].url}"
+      puts "http://thedp.com#{self.sections[index].url}"
     else
       puts "Click the url:"
-      puts @@sections[index].url
+      puts self.sections[index].url
     end
   end
 
   def self.link(input)
     index = input - 1
     if -1 < index && index < 3
-      "http://thedp.com#{@@sections[index].url}"
+      "http://thedp.com#{self.sections[index].url}"
     else
-      @@sections[index].url
+      self.sections[index].url
     end
   end
 
   def self.scrape_article_details(input)
-    Section.link(input)
-    doc = Nokogiri::HTML(open(Section.link(input)))
-    if Section.link(input) == "http://www.34st.com/"
+    self.link(input)
+    doc = Nokogiri::HTML(open(self.link(input)))
+    if self.link(input) == "http://www.34st.com/"
       doc.search('nav.col-xs-10 a').each do |entry|
         ss = Subsection.new
         ss.name = entry.text
         ss.url = entry['href']
-        @@subsections << ss
+        @subsections << ss
       end
-    elsif Section.link(input) == "http://www.underthebutton.com/"
+    elsif self.link(input) == "http://www.underthebutton.com/"
       doc.search('div.col-md-6.main article').each do |entry|
         a = Article.new
         a.title = entry.search('h2 a').text.strip
         a.timestamp = entry.search('span.publish').text.strip
         a.url = entry.search('h2 a[href]').map {|element| element["href"]}
         a.author = entry.search('span.author a').text.strip
-        @@articles << a
+        @articles << a
       end
-      Section.print_articles
+      self.print_articles
     else
       doc.search('div.row div.col-md-8').each do |entry|
         a = Article.new
         a.title = entry.search('h3.standard-link a').text
         a.timestamp = entry.search('div.timestamp').text
         a.url = entry.search('h3.standard-link a[href]').map {|element| element["href"]}
-        @@articles << a
+        @articles << a
       end
-      Section.scrape_article_details_2
-      Section.print_articles
+      self.scrape_article_details_2
+      self.print_articles
     end
   end
 
   #need to figure out how to scrape each article's author and content (body text)
   def self.scrape_article_details_2
-    @@articles.each do |article|
+    @articles.each do |article|
       link = article.url.join
       doc = Nokogiri::HTML(open(link))
       article.author = doc.search('div.article-metadata span.byline a').text
@@ -100,7 +109,7 @@ class Section
   end
 
   def self.print_articles
-    @@articles[1..-1].each_with_index do |article, index|
+    @articles[1..-1].each_with_index do |article, index|
       indexplusone = index + 1
       puts "#{indexplusone}) #{article.title}
       By: #{article.author}
@@ -113,21 +122,28 @@ class Section
     index = input
     puts ""
     puts "..."
-    puts @@articles[index].title
-    puts @@articles[index].author
-    puts @@articles[index].timestamp
+    puts @articles[index].title
+    puts @articles[index].author
+    puts @articles[index].timestamp
     puts ""
-    if @@articles[index].content != ""
-      puts @@articles[index].content.join
+    if @articles[index].content != ""
+      puts @articles[index].content.join
     else
-      puts @@articles[index].url
+      puts @articles[index].url
     end
   end
 
   def self.print_subsections
-    @@subsections[0..5].each_with_index do |subsection, index|
+    @subsections[0..5].each_with_index do |subsection, index|
       indexplusone = index + 1
       puts "#{indexplusone}) #{subsection.name}"
     end
   end
+
+  def self.access_ss_url(input)
+    index = input - 1
+    puts "Click the url:"
+    puts "http://www.34st.com#{@subsections[index].url}"
+  end
+
 end

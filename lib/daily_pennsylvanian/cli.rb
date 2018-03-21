@@ -153,13 +153,32 @@ class CLI
     Section.scrape_article_details(4)
     Section.print_subsections
     subsection_menu
+    ss_input = ""
+    while ss_input != "exit"
+      ss_input = gets.strip.downcase
+      if ss_input == "exit"
+        exit_program
+        break
+      elsif ss_input.to_i > 0
+        input = ss_input.to_i
+        Section.access_ss_url(input)
+        puts ""
+        puts "To exit the program, enter 'exit'."
+      elsif number == "menu"
+        main_menu
+        break
+      else
+        puts "invalid entry, please try again:"
+        subsection_menu
+      end
+    end
   end
 
   def subsection_menu
     puts ""
     puts "Subsection Menu:"
-    puts "To access a subsection's url, enter its number."
-    puts "To return to the Main Menu, enter 'menu'."
-    puts "To exit the program, enter 'exit'."
+    puts "1) To access a subsection's url, enter its number."
+    puts "2) To return to the Main Menu, enter 'menu'."
+    puts "3) To exit the program, enter 'exit'."
   end
 end
