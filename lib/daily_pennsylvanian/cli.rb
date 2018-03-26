@@ -8,7 +8,7 @@ class CLI
   def welcome
     puts "Welcome to the Daily Pennsylvanian!"
     puts ""
-    Section.scrape
+    Scraper.scrape_sections
   end
 
   def main_menu
@@ -31,7 +31,7 @@ class CLI
 
   def main_menu_options
     puts "Which section piques your interest?"
-    Section.section_names
+    Scraper.section_names
     puts ""
     puts "Main Menu"
     puts "1) To select a Section of the newspaper, enter the Section number."
@@ -43,7 +43,7 @@ class CLI
     puts ""
     puts "..."
     puts "Sections"
-    Section.section_names
+    Scraper.section_names
     puts ""
     puts "To select a section, enter its number:"
   end
@@ -55,7 +55,7 @@ class CLI
   end
 
   def open_section(input)
-    Section.open_section(input)
+    Scraper.open_section(input)
     section_menu(input)
     user_input = ""
     while user_input != "exit"
@@ -78,7 +78,7 @@ class CLI
         break
       else
         invalid_entry
-        Section.open_section(input)
+        Scraper.open_section(input)
         section_menu(input)
       end
     end
@@ -103,7 +103,7 @@ class CLI
   def get_url(input)
     puts ""
     puts "..."
-    Section.access_url(input)
+    Scraper.access_url(input)
     puts ""
     puts "To exit the program, enter 'exit'."
     puts "To return to the menu, enter 'menu'."
@@ -114,7 +114,7 @@ class CLI
     puts "Loading articles..."
     puts ""
     puts "Articles:"
-    Section.scrape_article_details(input)
+    Scraper.scrape_article_details(input)
   end
 
   def articles_menu
@@ -139,7 +139,7 @@ class CLI
         break
       elsif number.to_i > 0
         input = number.to_i
-        Section.print_article_content(input)
+        Scraper.print_article_content(input)
         puts ""
         puts "To return to the articles menu, enter 'back'."
         puts "To exit the program, enter 'exit'."
@@ -167,7 +167,7 @@ class CLI
         break
       elsif ss_input.to_i > 0
         input = ss_input.to_i
-        Section.access_ss_url(input)
+        Scraper.access_ss_url(input)
         puts ""
         puts "To exit the program, enter 'exit'."
         puts "To return to the subsection menu, enter 'back'."
@@ -196,7 +196,7 @@ class CLI
     puts ""
     puts "..."
     puts "Subsections:"
-    Section.scrape_article_details(4)
-    Section.print_subsections
+    Scraper.scrape_article_details(4)
+    Scraper.print_subsections
   end
 end
