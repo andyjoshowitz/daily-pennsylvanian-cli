@@ -183,7 +183,6 @@ class CLI
   end
 
   def print_article_content(article)
-    index = article
     puts ""
     puts "..."
     puts article.title
@@ -191,7 +190,7 @@ class CLI
     puts article.timestamp
     puts ""
     if article.content != ""
-      puts article.content.join
+      puts article.content[0..-2].join
     else
       puts article.url
     end
