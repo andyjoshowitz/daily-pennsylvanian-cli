@@ -1,10 +1,5 @@
 class CLI
 
-  def initialize
-
-  end
-
-
   def call
     welcome
     main_menu
