@@ -7,11 +7,11 @@ class CLI
 
   def welcome
     puts "Welcome to the Daily Pennsylvanian!"
-    puts ""
     Scraper.scrape_sections
   end
 
   def main_menu
+    puts ""
     main_menu_options
 
     input = ""
@@ -22,8 +22,12 @@ class CLI
         break
       elsif input == "list"
         list_sections
-      elsif input.to_i > 0
+      elsif input.to_i > 0 && input.to_i < 6
         open_section(input.to_i)
+        break
+      else
+        invalid_entry
+        main_menu
         break
       end
     end
@@ -31,7 +35,7 @@ class CLI
 
   def main_menu_options
     puts "Which section piques your interest?"
-    Scraper.section_names
+    section_names
     puts ""
     puts "Main Menu"
     puts "1) To select a Section of the newspaper, enter the Section number."
@@ -43,7 +47,7 @@ class CLI
     puts ""
     puts "..."
     puts "Sections"
-    Scraper.section_names
+    section_names
     puts ""
     puts "To select a section, enter its number:"
   end
@@ -54,8 +58,12 @@ class CLI
     puts ""
   end
 
+  def invalid_entry
+    puts ""
+    puts "invalid entry, please try again:"
+  end
+
   def open_section(input)
-    Scraper.open_section(input)
     section_menu(input)
     user_input = ""
     while user_input != "exit"
@@ -68,7 +76,7 @@ class CLI
           open_subsections
         else
           list_articles(input)
-          article_content
+          article_content(input)
         end
         break
       elsif user_input.to_i == 2
@@ -78,13 +86,19 @@ class CLI
         break
       else
         invalid_entry
-        Scraper.open_section(input)
+        open_section(input)
         section_menu(input)
+        break
       end
     end
   end
 
-  def section_menu (input)
+
+  def section_menu(input)
+    index = input - 1
+    puts ""
+    puts "..."
+    puts "Welcome to #{Section.sections[index].name}"
     puts ""
     puts "Section Menu"
     if input == 4
@@ -103,7 +117,14 @@ class CLI
   def get_url(input)
     puts ""
     puts "..."
-    Scraper.access_url(input)
+    index = input - 1
+    if -1 < index && index < 3
+      puts "Click the url:"
+      puts "http://thedp.com#{Section.sections[index].url}"
+    else
+      puts "Click the url:"
+      puts Section.sections[index].url
+    end
     puts ""
     puts "To exit the program, enter 'exit'."
     puts "To return to the menu, enter 'menu'."
@@ -113,23 +134,19 @@ class CLI
     puts ""
     puts "Loading articles..."
     puts ""
-    puts "Articles:"
     Scraper.scrape_article_details(input)
+    puts "Articles:"
+    Section.sections[input-1].articles[1..-1].each_with_index do |article, index|
+      indexplusone = index + 1
+      puts "#{indexplusone}) #{article.title}
+      By: #{article.author}
+      Posted: #{article.timestamp}
+      Link: #{article.url.join}"
+    end
   end
 
-  def articles_menu
-    puts ""
-    puts "Articles Menu:"
-    puts "1) To read an article, enter its number."
-    puts "2) To exit the program, enter 'exit'."
-    puts "3) To return to the Main Menu, enter 'menu'."
-  end
-
-  def invalid_entry
-    puts "invalid entry, please try again:"
-  end
-
-  def article_content
+  def article_content(input)
+    section = Section.sections[input-1]
     articles_menu
     number = ""
     while number != "exit"
@@ -138,13 +155,14 @@ class CLI
         exit_program
         break
       elsif number.to_i > 0
-        input = number.to_i
-        Scraper.print_article_content(input)
+        item = number.to_i
+        article = section.articles[item]
+        print_article_content(article)
         puts ""
         puts "To return to the articles menu, enter 'back'."
         puts "To exit the program, enter 'exit'."
       elsif number == "back"
-        article_content
+        article_content(input)
         break
       elsif number == "menu"
         main_menu
@@ -156,8 +174,31 @@ class CLI
     end
   end
 
-  def open_subsections
-    list_subsections
+  def articles_menu
+    puts ""
+    puts "Articles Menu:"
+    puts "1) To read an article, enter its number."
+    puts "2) To exit the program, enter 'exit'."
+    puts "3) To return to the Main Menu, enter 'menu'."
+  end
+
+  def print_article_content(article)
+    index = article
+    puts ""
+    puts "..."
+    puts article.title
+    puts article.author
+    puts article.timestamp
+    puts ""
+    if article.content != ""
+      puts article.content.join
+    else
+      puts article.url
+    end
+  end
+
+  def open_subsections(input)
+    list_subsections(input)
     subsection_menu
     ss_input = ""
     while ss_input != "exit"
@@ -166,8 +207,8 @@ class CLI
         exit_program
         break
       elsif ss_input.to_i > 0
-        input = ss_input.to_i
-        Scraper.access_ss_url(input)
+        item = ss_input.to_i
+        access_ss_url(item)
         puts ""
         puts "To exit the program, enter 'exit'."
         puts "To return to the subsection menu, enter 'back'."
@@ -197,6 +238,23 @@ class CLI
     puts "..."
     puts "Subsections:"
     Scraper.scrape_article_details(4)
-    Scraper.print_subsections
+    Section.sections[input-1].subsections[0..5].each_with_index do |subsection, index|
+      indexplusone = index + 1
+      puts "#{indexplusone}) #{subsection.name}"
+    end
   end
+
+  def access_ss_url(item)
+    index = item - 1
+    puts "Click the url:"
+    puts "http://www.34st.com#{Section.subsections[index].url}"
+  end
+
+  def section_names
+    Section.sections[0..4].each_with_index do |section, index|
+      indexplusone = index + 1
+      puts "#{indexplusone}) #{section.name}"
+    end
+  end
+
 end

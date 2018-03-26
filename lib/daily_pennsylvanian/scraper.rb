@@ -15,31 +15,6 @@ class Scraper
     end
   end
 
-  def self.section_names
-    Section.sections[0..4].each_with_index do |section, index|
-      indexplusone = index + 1
-      puts "#{indexplusone}) #{section.name}"
-    end
-  end
-
-  def self.open_section(input)
-    index = input - 1
-    puts ""
-    puts "..."
-    puts "Welcome to #{Section.sections[index].name}"
-  end
-
-  def self.access_section_url(input)
-    index = input - 1
-    if -1 < index && index < 3
-      puts "Click the url:"
-      puts "http://thedp.com#{Section.sections[index].url}"
-    else
-      puts "Click the url:"
-      puts Section.sections[index].url
-    end
-  end
-
   def self.link(input)
     index = input - 1
     if -1 < index && index < 3
@@ -57,8 +32,10 @@ class Scraper
         ss = Subsection.new
         ss.name = entry.text
         ss.url = entry['href']
-        Section.add_subsection(ss)
+        Section.sections[input-1].add_subsection(ss)
+        ss.section = Section.sections[input-1].name
       end
+      self.print_subsections(input)
     elsif self.link(input) == "http://www.underthebutton.com/"
       doc.search('div.col-md-6.main article').each do |entry|
         a = Article.new
@@ -69,7 +46,6 @@ class Scraper
         Section.sections[input-1].add_article(a)
         a.section = Section.sections[input-1].name
       end
-      self.print_articles
     else
       doc.search('div.row div.col-md-8').each do |entry|
         a = Article.new
@@ -80,7 +56,6 @@ class Scraper
         a.section = Section.sections[input-1].name
       end
       self.scrape_article_details_2(input)
-      self.print_articles(input)
     end
   end
 
@@ -93,44 +68,6 @@ class Scraper
         pgh.text.strip
       end
     end
-  end
-
-  def self.print_articles(input)
-    Section.sections[input-1].articles[1..-1].each_with_index do |article, index|
-      indexplusone = index + 1
-      puts "#{indexplusone}) #{article.title}
-      By: #{article.author}
-      Posted: #{article.timestamp}
-      Link: #{article.url.join}"
-    end
-  end
-
-  def self.print_article_content(input)
-    index = input
-    puts ""
-    puts "..."
-    puts Section.sections[input-1].articles[index].title
-    puts Section.articles[index].author
-    puts Section.articles[index].timestamp
-    puts ""
-    if Section.articles[index].content != ""
-      puts Section.articles[index].content.join
-    else
-      puts Section.articles[index].url
-    end
-  end
-
-  def self.print_subsections
-    Section.subsections[0..5].each_with_index do |subsection, index|
-      indexplusone = index + 1
-      puts "#{indexplusone}) #{subsection.name}"
-    end
-  end
-
-  def self.access_ss_url(input)
-    index = input - 1
-    puts "Click the url:"
-    puts "http://www.34st.com#{Section.subsections[index].url}"
   end
 
 end

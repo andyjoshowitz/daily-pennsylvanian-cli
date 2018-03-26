@@ -1,6 +1,6 @@
 
 class Section
-  attr_accessor :name, :url, :articles
+  attr_accessor :name, :url, :articles, :subsections
 
   @@sections = []
 
@@ -24,6 +24,15 @@ class Section
 
   def articles
     @articles
+  end
+
+  def add_subsection(subsection)
+    @subsections << subsection
+    subsection.section = self
+  end
+
+  def subsections
+    @subsections
   end
 
 end
