@@ -138,10 +138,10 @@ class CLI
     puts "Articles:"
     Section.sections[input-1].articles[1..-1].each_with_index do |article, index|
       indexplusone = index + 1
-      puts "#{indexplusone}) #{article.title}
-      By: #{article.author}
-      Posted: #{article.timestamp}
-      Link: #{article.url.join}"
+      puts "#{indexplusone}) #{article.title}"
+      puts "    By: #{article.author} "
+      puts "    Posted: #{article.timestamp}"
+      puts "    Link: #{article.url.join}"
     end
   end
 
