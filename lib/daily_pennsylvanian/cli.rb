@@ -206,8 +206,9 @@ class CLI
         exit_program
         break
       elsif ss_input.to_i > 0
-        item = ss_input.to_i
-        access_ss_url(item)
+        index = ss_input.to_i - 1
+        path = Section.sections[input-1].subsections[index]
+        access_ss_url(path)
         puts ""
         puts "To exit the program, enter 'exit'."
         puts "To return to the subsection menu, enter 'back'."
@@ -243,10 +244,9 @@ class CLI
     end
   end
 
-  def access_ss_url(item)
-    index = item - 1
+  def access_ss_url(path)
     puts "Click the url:"
-    puts "http://www.34st.com#{Section.sections[input-1].subsections[index].url}"
+    puts "http://www.34st.com#{path.url}"
   end
 
   def section_names
