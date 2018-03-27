@@ -207,6 +207,7 @@ class CLI
         break
       elsif ss_input.to_i > 0
         index = ss_input.to_i - 1
+        # I created a new variable here to help smooth things over in my access_ss_url method
         path = Section.sections[input-1].subsections[index]
         access_ss_url(path)
         puts ""
@@ -244,6 +245,7 @@ class CLI
     end
   end
 
+  #fixed method!
   def access_ss_url(path)
     puts "Click the url:"
     puts "http://www.34st.com#{path.url}"
