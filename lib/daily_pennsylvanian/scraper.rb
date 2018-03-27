@@ -35,7 +35,6 @@ class Scraper
         Section.sections[input-1].add_subsection(ss)
         ss.section = Section.sections[input-1].name
       end
-      self.print_subsections(input)
     elsif self.link(input) == "http://www.underthebutton.com/"
       doc.search('div.col-md-6.main article').each do |entry|
         a = Article.new

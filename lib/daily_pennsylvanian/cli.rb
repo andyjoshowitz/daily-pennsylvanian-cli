@@ -73,7 +73,7 @@ class CLI
         break
       elsif user_input.to_i == 1
         if input == 4
-          open_subsections
+          open_subsections(input)
         else
           list_articles(input)
           article_content(input)
@@ -212,7 +212,7 @@ class CLI
         puts "To exit the program, enter 'exit'."
         puts "To return to the subsection menu, enter 'back'."
       elsif ss_input == 'back'
-        open_subsections
+        open_subsections(input)
         break
       elsif ss_input == "menu"
         main_menu
@@ -232,7 +232,7 @@ class CLI
     puts "3) To exit the program, enter 'exit'."
   end
 
-  def list_subsections
+  def list_subsections(input)
     puts ""
     puts "..."
     puts "Subsections:"
@@ -246,7 +246,7 @@ class CLI
   def access_ss_url(item)
     index = item - 1
     puts "Click the url:"
-    puts "http://www.34st.com#{Section.subsections[index].url}"
+    puts "http://www.34st.com#{Section.sections[input-1].subsections[index].url}"
   end
 
   def section_names
